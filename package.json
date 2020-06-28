@@ -1,0 +1,20 @@
+{
+  "name": "let",
+  "private": true,
+  "dependencies": {
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "4.2.2",
+    "axios": "^0.19.2",
+    "vue": "^2.6.11",
+    "vue-eslint-parser": "^7.1.0",
+    "vue-loader": "^16.0.0-beta.4",
+    "vue-router": "^3.3.4",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
+}
