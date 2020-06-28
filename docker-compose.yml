@@ -1,0 +1,44 @@
+version: '3'
+services:
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/let/public
+      - tmp-data:/let/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
+  app:
+    build:
+      context: .
+    # command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails assets:precompile && bundle exec rails s -e production"
+    volumes:
+      - .:/let
+      - bundle:/usr/local/bundle 
+      - public-data:/let/public
+      - tmp-data:/let/tmp
+      - yarn-cache:/usr/local/share/.cache/yarn/v6
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:
+    driver: local
+  bundle:
+  yarn-cache:
+  public-data:
+  tmp-data:
