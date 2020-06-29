@@ -4,7 +4,7 @@ services:
     build:
       context: containers/nginx
     volumes:
-      - public-data:/let
+      - public-data:/let/public
       - tmp-data:/let/tmp
     ports:
       - 80:80
@@ -17,7 +17,7 @@ services:
     volumes:
       - .:/let
       - bundle:/usr/local/bundle 
-      - public-data:/let
+      - public-data:/let/public
       - tmp-data:/let/tmp
       - yarn-cache:/usr/local/share/.cache/yarn/v6
     ports:
