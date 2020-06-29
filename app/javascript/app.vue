@@ -1,15 +1,35 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
+    <table>
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>name</th>
+          <th>email</th>
+        </tr>
+        <tr v-for="user in users" :key="user.id">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data: function () {
     return {
-      message: "Hello Vue!"
+      users: []
     }
+  },
+  mounted () {
+    axios
+      .get('/api/v1/users.json')
+      .then(response => (this.users = response.data))
   }
 }
 </script>
