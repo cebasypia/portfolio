@@ -46,3 +46,6 @@ gem 'dotenv-rails'
 
 # ログイン管理
 gem 'devise'
+
+# Twitter API
+gem 'twitter'
