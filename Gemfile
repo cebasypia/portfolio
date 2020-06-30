@@ -43,3 +43,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # 環境変数
 gem 'dotenv-rails'
+
+# ログイン管理
+gem 'devise'
+
+# Twitter API
+gem 'twitter'
