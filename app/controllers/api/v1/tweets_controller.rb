@@ -21,10 +21,10 @@ class Api::V1::TweetsController < ApiController
   def search
     client = Twitter::REST::Client.new do |config|
       # 事前準備で取得したキーのセット
-      config.consumer_key         = "jXTBVunLpSBVi6DuEk92LpoVu"
-      config.consumer_secret      = "uhxHAqWJ8bUAvQL7m05ds2qbjpwLERdyZWXXqbu0EvLXDZQneO"
-      config.access_token         = "1277602086251720716-5u1K2m8SSDy0mtOM3NDaFZuc1pvOVj"
-      config.access_token_secret  = "9Xo2iLvbRkTfOeM0vVmbknOeguWOfvPbpIpuWpAxd0EyG"
+      config.consumer_key         = ENV['CONSUMER_KEY']
+      config.consumer_secret      = ENV['CONSUMER_SECRET']
+      config.access_token         = ENV['ACCESS_TOKEN']
+      config.access_token_secret  = ENV['ACCESS_TOKEN_SECRET']
     end
 
     @tweets = []
