@@ -30,6 +30,10 @@
 
 # 環境変数
 .env
+
+# VScode 設定
+/.vscode/
+
 /public/packs
 /public/packs-test
 /node_modules
