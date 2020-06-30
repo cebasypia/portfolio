@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <v-app>
+  <AppBar></AppBar>
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import AppBar from './packs/components/appBar.vue'
 import UsersIndexPage from './packs/views/users/index.vue'
 import UsersShowPage from './packs/views/users/show.vue'
 import UsersNewPage from './packs/views/users/new.vue'
@@ -16,18 +18,21 @@ import TweetsSearchPage from './packs/views/tweets/search.vue'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: UsersIndexPage},
+    { path: '/', name: 'TweetsIndexPage', component: TweetsIndexPage},
+    { path: '/tweets/search', name: 'TweetsSearchPage', component: TweetsSearchPage},
+    { path: '/users.index', component: UsersIndexPage},
     { path: '/users/:id(\\d+)', name: 'UsersShowPage', component: UsersShowPage},
     { path: '/users/new', name: 'UsersNewPage', component: UsersNewPage},
-    { path: '/tweets/index', name: 'TweetsIndexPage', component: TweetsIndexPage},
-    { path: '/tweets/search', name: 'TweetsSearchPage', component: TweetsSearchPage},
   ]
 })
 
 Vue.use(VueRouter)
 
 export default {
-  router
+  router,
+  components : {
+    AppBar
+  }
 }
 </script>
 
