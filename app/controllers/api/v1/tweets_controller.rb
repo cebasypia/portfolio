@@ -1,11 +1,11 @@
 class Api::V1::TweetsController < ApiController
-  def index
+  def search
     @tweets = []
     since_id = nil
     client = set_client
     # リツイートを除く、検索ワードにひっかかった最新10件のツイートを取得する
     tweets = client.search(
-      "japan",
+      params[:word],
       lang: "en",
       tweet_mode: "extended",
       count: 10,
@@ -30,12 +30,6 @@ class Api::V1::TweetsController < ApiController
       @tweets.push(@tweet)
     end
     render json: @tweets
-  end
-
-  def search
-    client = set_client
-    @tweet = client.home_timeline
-    render json: @tweet
   end
 
   def show

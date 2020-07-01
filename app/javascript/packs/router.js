@@ -13,7 +13,12 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-    { path: '/', name: 'TweetsIndexPage', component: TweetsIndexPage },
+    {
+      path: '/',
+      name: 'TweetsIndexPage',
+      component: TweetsIndexPage,
+      props: true,
+    },
     {
       path: '/tweets/search',
       name: 'TweetsSearchPage',

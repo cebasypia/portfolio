@@ -14,6 +14,12 @@ import TweetCard from '../../components/tweetCard.vue'
 import axios from 'axios'
 
 export default {
+  props: {
+    word: {
+      type: String,
+      default: 'japan',
+    },
+  },
   data: function () {
     return {
       tweets: [],
@@ -21,7 +27,9 @@ export default {
   },
   mounted() {
     axios
-      .get(`/api/v1/tweets/index`)
+      .post(`/api/v1/tweets`, {
+        word: this.$props.word,
+      })
       .then((response) => (this.tweets = response.data))
   },
   components: {
