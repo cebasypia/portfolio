@@ -2,19 +2,21 @@
   <form @submit.prevent="searchTweets">
     <div v-if="errors.length != 0">
       <ul v-for="error in errors" :key="error">
-        <li><font color="red">{{ error }}</font></li>
+        <li>
+          <font color="red">{{ error }}</font>
+        </li>
       </ul>
     </div>
     <div>
       <label>Keyword</label>
-      <input v-model="search.keyword" type="text">
+      <input v-model="search.keyword" type="text" />
     </div>
     <button type="submit">Commit</button>
   </form>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   data: function () {
@@ -22,27 +24,25 @@ export default {
       search: {
         keyword: '',
       },
-      errors: ''
+      errors: '',
     }
   },
   methods: {
-    searchTweets: function() {
+    searchTweets: function () {
       axios
         .post('/api/v1/tweets', this.search)
-        .then(response => {
-          let tweets = response.data;
-          this.$router.push({ name: 'TweetsIndexPage' });
+        .then((response) => {
+          this.$router.push({ name: 'TweetsIndexPage' })
         })
-        .catch(error => {
-          console.error(error);
+        .catch((error) => {
+          console.error(error)
           if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
+            this.errors = error.response.data.errors
           }
-        });
-    }
-  }
+        })
+    },
+  },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

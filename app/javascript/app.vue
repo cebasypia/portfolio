@@ -1,6 +1,6 @@
 <template>
   <v-app>
-  <AppBar></AppBar>
+    <AppBar></AppBar>
     <router-view></router-view>
   </v-app>
 </template>
@@ -9,11 +9,10 @@
 import AppBar from './packs/components/appBar.vue'
 
 export default {
-  components : {
-    AppBar
-  }
+  components: {
+    AppBar,
+  },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

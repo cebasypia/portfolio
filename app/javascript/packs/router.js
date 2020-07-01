@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter from "vue-router"
+import VueRouter from 'vue-router'
 
 import UsersIndexPage from './views/users/index.vue'
 import UsersShowPage from './views/users/show.vue'
@@ -12,11 +12,19 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     { path: '/', name: 'TweetsIndexPage', component: TweetsIndexPage },
-    { path: '/tweets/search', name: 'TweetsSearchPage', component: TweetsSearchPage },
+    {
+      path: '/tweets/search',
+      name: 'TweetsSearchPage',
+      component: TweetsSearchPage,
+    },
     { path: '/users.index', component: UsersIndexPage },
-    { path: '/users/:id(\\d+)', name: 'UsersShowPage', component: UsersShowPage },
+    {
+      path: '/users/:id(\\d+)',
+      name: 'UsersShowPage',
+      component: UsersShowPage,
+    },
     { path: '/users/new', name: 'UsersNewPage', component: UsersNewPage },
-  ]
+  ],
 })
 
 export default router
