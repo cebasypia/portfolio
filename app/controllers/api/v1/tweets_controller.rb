@@ -1,5 +1,74 @@
 class Api::V1::TweetsController < ApiController
-  def index
+  def search
+    @tweets = []
+    since_id = nil
+    client = set_client
+    # リツイートを除く、検索ワードにひっかかった最新10件のツイートを取得する
+    tweets = client.search(
+      params[:word],
+      lang: "en",
+      tweet_mode: "extended",
+      count: 10,
+      result_type: "recent",
+      exclude: "retweets",
+      since_id: since_id
+    )
+    # 取得したツイートをモデルに渡す
+    tweets.take(10).each do |tweet|
+      @tweet = Tweet.new(
+        id: tweet.attrs[:id_str],
+        full_text: tweet.attrs[:full_text],
+        favorite_count: tweet.attrs[:favorite_count],
+        retweet_count: tweet.attrs[:retweet_count],
+        created_at: tweet.attrs[:created_at],
+        uri: tweet.uri.to_s,
+        user_id: tweet.user.attrs[:id_str],
+        user_name: tweet.user.attrs[:name],
+        user_profile_image_url: tweet.user.profile_image_url_https(size = :bigger).to_s,
+        user_uri: tweet.user.uri .to_s
+      )
+      @tweets.push(@tweet)
+    end
+    render json: @tweets
+  end
+
+  def show
+    client = set_client
+    tweet = client.status(params[:id], tweet_mode: "extended")
+    @tweet = Tweet.new(
+      id: tweet.attrs[:id_str],
+      full_text: tweet.attrs[:full_text],
+      favorite_count: tweet.attrs[:favorite_count],
+      retweet_count: tweet.attrs[:retweet_count],
+      created_at: tweet.attrs[:created_at],
+      uri: tweet.uri.to_s,
+      user_id: tweet.user.attrs[:id_str],
+      user_name: tweet.user.attrs[:name],
+      user_profile_image_url: tweet.user.profile_image_url_https(size = :bigger).to_s,
+      user_uri: tweet.user.uri .to_s
+    )
+    render json: @tweet
+  end
+
+  def user
+    client = set_client
+    user = client.user(params[:id].to_i)
+    @user = TwitterUser.new(
+      id: user.attrs[:id_str],
+      name: user.attrs[:name],
+      screen_name: user.attrs[:screen_name],
+      description: user.attrs[:description],
+      followers_count: user.attrs[:followers_count],
+      friends_count: user.attrs[:friends_count],
+      profile_image_url: user.profile_image_url_https(size = :bigger).to_s,
+      uri: user.uri.to_s,
+    )
+    render json: @user
+  end
+
+  private
+
+  def set_client
     client = Twitter::REST::Client.new do |config|
       # 事前準備で取得したキーのセット
       config.consumer_key         = ENV['CONSUMER_KEY']
@@ -7,24 +76,6 @@ class Api::V1::TweetsController < ApiController
       config.access_token         = ENV['ACCESS_TOKEN']
       config.access_token_secret  = ENV['ACCESS_TOKEN_SECRET']
     end
-
-    @tweets = []
-    since_id = nil
-    # リツイートを除く、検索ワードにひっかかった最新10件のツイートを取得する
-    tweets = client.search("japan",
-                           lang: "en",
-                           tweet_mode: "extended",
-                           count: 10,
-                           result_type: "recent",
-                           exclude: "retweets",
-                           since_id: since_id)
-    # 取得したツイートをモデルに渡す
-    tweets.take(10).each do |tweet|
-      @tweets.push(tweet)
-    end
-    render json: @tweets
-  end
-
-  def search
+    client
   end
 end
