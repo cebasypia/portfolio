@@ -5,12 +5,10 @@
         <router-link
           v-bind:to="{
             name: 'TweetsUserPage',
-            params: { id: tweet.user.id_str },
+            params: { id: tweet.user_id },
           }"
         >
-          <v-img
-            :src="change_size(tweet.user.profile_image_url_https, 'bigger')"
-          ></v-img>
+          <v-img :src="tweet.user_profile_image_url"></v-img>
         </router-link>
       </v-list-item-avatar>
       <v-list-item-content>
@@ -18,11 +16,11 @@
         <router-link
           v-bind:to="{
             name: 'TweetsUserPage',
-            params: { id: tweet.user.id_str },
+            params: { id: tweet.user_id },
           }"
         >
           <v-list-item-title class="user-name">
-            {{ tweet.user.name }}
+            {{ tweet.user_name }}
           </v-list-item-title>
         </router-link>
       </v-list-item-content>
@@ -30,14 +28,16 @@
     <router-link
       v-bind:to="{
         name: 'TweetsShowPage',
-        params: { id: tweet.id_str },
+        params: { id: tweet.id },
       }"
     >
       <v-card-text class="text">{{ tweet.full_text }}</v-card-text>
     </router-link>
     <v-row justify="space-around" fill-height class="info-row">
       <v-col cols="3">
-        <v-icon class="icon-twitter">mdi-twitter</v-icon>
+        <a :href="tweet.uri" target="_blank">
+          <v-icon class="icon-twitter">mdi-twitter</v-icon>
+        </a>
       </v-col>
       <v-col cols="3"> いいね: {{ tweet.favorite_count }} </v-col>
       <v-col cols="auto"> リツイート数: {{ tweet.retweet_count }} </v-col>
@@ -47,11 +47,6 @@
 <script>
 export default {
   props: ['tweet'],
-  methods: {
-    change_size(url, size) {
-      return url.replace('normal', size)
-    },
-  },
 }
 </script>
 

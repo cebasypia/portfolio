@@ -15,7 +15,19 @@ class Api::V1::TweetsController < ApiController
     )
     # 取得したツイートをモデルに渡す
     tweets.take(10).each do |tweet|
-      @tweets.push(tweet)
+      @tweet = Tweet.new(
+        id: tweet.attrs[:id_str],
+        full_text: tweet.attrs[:full_text],
+        favorite_count: tweet.attrs[:favorite_count],
+        retweet_count: tweet.attrs[:retweet_count],
+        created_at: tweet.attrs[:created_at],
+        uri: tweet.uri.to_s,
+        user_id: tweet.user.attrs[:id_str],
+        user_name: tweet.user.attrs[:name],
+        user_profile_image_url: tweet.user.profile_image_url_https(size = :bigger).to_s,
+        user_uri: tweet.user.uri .to_s
+      )
+      @tweets.push(@tweet)
     end
     render json: @tweets
   end
@@ -28,13 +40,35 @@ class Api::V1::TweetsController < ApiController
 
   def show
     client = set_client
-    @tweet = client.status(params[:id], tweet_mode: "extended")
+    tweet = client.status(params[:id], tweet_mode: "extended")
+    @tweet = Tweet.new(
+      id: tweet.attrs[:id_str],
+      full_text: tweet.attrs[:full_text],
+      favorite_count: tweet.attrs[:favorite_count],
+      retweet_count: tweet.attrs[:retweet_count],
+      created_at: tweet.attrs[:created_at],
+      uri: tweet.uri.to_s,
+      user_id: tweet.user.attrs[:id_str],
+      user_name: tweet.user.attrs[:name],
+      user_profile_image_url: tweet.user.profile_image_url_https(size = :bigger).to_s,
+      user_uri: tweet.user.uri .to_s
+    )
     render json: @tweet
   end
 
   def user
     client = set_client
-    @user = client.user(params[:id].to_i)
+    user = client.user(params[:id].to_i)
+    @user = TwitterUser.new(
+      id: user.attrs[:id_str],
+      name: user.attrs[:name],
+      screen_name: user.attrs[:screen_name],
+      description: user.attrs[:description],
+      followers_count: user.attrs[:followers_count],
+      friends_count: user.attrs[:friends_count],
+      profile_image_url: user.profile_image_url_https(size = :bigger).to_s,
+      uri: user.uri.to_s,
+    )
     render json: @user
   end
 
