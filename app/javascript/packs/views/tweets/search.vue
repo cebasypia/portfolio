@@ -1,48 +1,38 @@
 <template>
-  <form @submit.prevent="searchTweets">
-    <div v-if="errors.length != 0">
-      <ul v-for="error in errors" :key="error">
-        <li><font color="red">{{ error }}</font></li>
-      </ul>
-    </div>
-    <div>
-      <label>Keyword</label>
-      <input v-model="search.keyword" type="text">
-    </div>
-    <button type="submit">Commit</button>
-  </form>
+  <v-form ref="form" v-model="valid" class="ma-2">
+    <v-text-field
+      v-model="search.word"
+      :rules="wordRules"
+      label="search word"
+      required
+    ></v-text-field>
+    <v-btn :disabled="!valid" color="success" right @click="searchTweets">
+      検索
+    </v-btn>
+  </v-form>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data: function () {
     return {
+      valid: false,
       search: {
-        keyword: '',
+        word: '',
       },
-      errors: ''
+      wordRules: [(v) => !!v || 'Search word is required'],
+      errors: '',
     }
   },
   methods: {
-    searchTweets: function() {
-      axios
-        .post('/api/v1/tweets', this.search)
-        .then(response => {
-          let tweets = response.data;
-          this.$router.push({ name: 'TweetsIndexPage' });
-        })
-        .catch(error => {
-          console.error(error);
-          if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
-          }
-        });
-    }
-  }
+    searchTweets() {
+      this.$router.push({
+        name: 'TweetsIndexPage',
+        params: { word: this.search.word },
+      })
+    },
+  },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
