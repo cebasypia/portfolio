@@ -10,21 +10,20 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   data: function () {
     return {
-      user: {}
+      user: {},
     }
   },
-  mounted () {
+  mounted() {
     axios
       .get(`/api/v1/users/${this.$route.params.id}.json`)
-      .then(response => (this.user = response.data))
-  }
+      .then((response) => (this.user = response.data))
+  },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
