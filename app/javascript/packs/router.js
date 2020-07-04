@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import UsersIndexPage from './views/users/index.vue'
+import UsersLoginPage from './views/users/login.vue'
 import UsersShowPage from './views/users/show.vue'
 import UsersNewPage from './views/users/new.vue'
 import TweetsIndexPage from './views/tweets/index.vue'
@@ -35,6 +36,11 @@ const router = new VueRouter({
       component: TweetsUserPage,
     },
     { path: '/users.index', component: UsersIndexPage },
+    {
+      path: '/login',
+      name: 'UsersLoginPage',
+      component: UsersLoginPage,
+    },
     {
       path: '/users/:id(\\d+)',
       name: 'UsersShowPage',
