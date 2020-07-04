@@ -14,20 +14,13 @@
       </ul>
     </v-alert>
     <v-text-field
-      v-model="user.name"
-      :counter="20"
-      :rules="rules.name"
-      label="Name"
-      required
-    ></v-text-field>
-    <v-text-field
-      v-model="user.email"
+      v-model="session.email"
       :rules="rules.email"
       label="E-mail"
       required
     ></v-text-field>
     <v-text-field
-      v-model="user.password"
+      v-model="session.password"
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="rules.password"
       :type="show1 ? 'text' : 'password'"
@@ -35,17 +28,8 @@
       counter
       @click:append="show1 = !show1"
     ></v-text-field>
-    <v-text-field
-      v-model="user.password_confirmation"
-      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-      :rules="rules.password_confirmation"
-      :type="show2 ? 'text' : 'password'"
-      label="Password confirmation"
-      counter
-      @click:append="show2 = !show2"
-    ></v-text-field>
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="createUser"
-      >登録</v-btn
+    <v-btn :disabled="!valid" color="success" class="mr-4" @click="login"
+      >Log in</v-btn
     >
   </v-form>
 </template>
@@ -56,38 +40,26 @@ import axios from 'axios'
 export default {
   data: function () {
     return {
-      user: {
-        name: '',
+      session: {
         email: '',
         password: '',
-        password_confirmation: '',
       },
       errors: '',
       valid: true,
       show1: false,
-      show2: false,
       rules: {
-        name: [
-          (v) => !!v || 'Name is required',
-          (v) =>
-            (v && v.length <= 10) || 'Name must be less than 10 characters',
-        ],
         email: [
           (v) => !!v || 'E-mail is required',
           (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
         password: [(v) => v.length >= 6 || 'Min 6 characters'],
-        password_confirmation: [
-          (v) => v.length >= 6 || 'Min 6 characters',
-          (v) => v === this.user.password || 'Password must match',
-        ],
       },
     }
   },
   methods: {
-    createUser: function () {
+    login: function () {
       axios
-        .post('/api/v1/users', this.user)
+        .post('/api/v1/login', this.session)
         .then((response) => {
           let user = response.data
           this.$router.push({ name: 'UsersShowPage', params: { id: user.id } })
@@ -105,6 +77,7 @@ export default {
 
 <style scoped>
 ul {
+  list-style: none;
   list-style: none;
 }
 </style>
