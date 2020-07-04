@@ -51,6 +51,7 @@ gem 'dotenv-rails'
 
 # ログイン管理
 gem 'devise'
+gem 'bcrypt'
 
 # Twitter API
 gem 'twitter'
