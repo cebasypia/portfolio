@@ -42,11 +42,25 @@
       <v-col cols="3"> いいね: {{ tweet.favorite_count }} </v-col>
       <v-col cols="auto"> リツイート数: {{ tweet.retweet_count }} </v-col>
     </v-row>
+    <v-row v-if="detail" justify="space-around" fill-height class="info-row">
+      <v-col cols="auto">
+        <ReadButton :tweet_id="tweet.id"></ReadButton>
+      </v-col>
+      <v-col cols="auto">
+        <WriteButton></WriteButton>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 <script>
+import ReadButton from './readButton'
+import WriteButton from './writeButton'
 export default {
-  props: ['tweet'],
+  props: ['tweet', 'detail'],
+  components: {
+    ReadButton,
+    WriteButton,
+  },
 }
 </script>
 

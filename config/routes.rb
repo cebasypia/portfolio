@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     namespace :v1 do
       resources :users, only: [:show, :create, :update, :destroy]
+      resources :reads, only: [:create, :destroy]
+      post '/tweets/is_read', to: 'reads#is_read'
       post   '/login',   to: 'sessions#create'
       delete '/logout',  to: 'sessions#destroy'
       get '/logged_in',  to: 'sessions#logged_in'

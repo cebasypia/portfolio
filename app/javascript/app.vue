@@ -2,7 +2,7 @@
   <v-app>
     <AppBar :current_user="current_user"></AppBar>
     <v-main>
-      <router-view></router-view>
+      <router-view :current_user="current_user"></router-view>
     </v-main>
     <ToolBar></ToolBar>
   </v-app>
