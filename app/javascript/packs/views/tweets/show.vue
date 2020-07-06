@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <tweetCard :tweet="tweet"></tweetCard>
+    <tweetCard :tweet="tweet" :detail="true"></tweetCard>
   </v-container>
 </template>
 
