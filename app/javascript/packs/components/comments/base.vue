@@ -49,6 +49,6 @@ export default {
   bottom: 56px;
   left: 0;
   width: 100%;
-  background-color: lightgray;
+  background-color: whitesmoke;
 }
 </style>
