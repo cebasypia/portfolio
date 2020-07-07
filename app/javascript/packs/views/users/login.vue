@@ -36,6 +36,7 @@
 
 <script>
 import axios from 'axios'
+import store from '../../store.js'
 
 export default {
   data: function () {
@@ -54,15 +55,16 @@ export default {
         ],
         password: [(v) => v.length >= 6 || 'Min 6 characters'],
       },
+      prevRoute: null,
     }
   },
   methods: {
     login: function () {
       axios
         .post('/api/v1/login', this.session)
-        .then((response) => {
-          let user = response.data
-          this.$router.push({ name: 'UsersShowPage', params: { id: user.id } })
+        .then(() => {
+          store.refresh()
+          this.$router.push({ path: this.prevRoute.path })
         })
         .catch((error) => {
           console.error(error)
@@ -71,6 +73,11 @@ export default {
           }
         })
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.prevRoute = from
+    })
   },
 }
 </script>
