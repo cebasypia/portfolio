@@ -68,4 +68,7 @@ a {
 ::v-deep .v-toolbar__content {
   justify-content: space-between !important;
 }
+::v-deep .v-toolbar__title {
+  padding-left: 0 !important;
+}
 </style>
