@@ -93,7 +93,6 @@ export default {
           this.$router.push({ name: 'UsersShowPage', params: { id: user.id } })
         })
         .catch((error) => {
-          console.error(error)
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors
           }

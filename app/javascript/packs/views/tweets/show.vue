@@ -1,18 +1,24 @@
 <template>
   <v-container fluid>
-    <tweetCard :tweet="tweet" :detail="true"></tweetCard>
+    <TweetCard :tweet="tweet" :detail="true"></TweetCard>
+    <ReadButton v-if="auth.logged_in" :tweet_id="tweet.id"></ReadButton>
+    <CommentBase v-if="auth.logged_in"></CommentBase>
   </v-container>
 </template>
 
 <script>
 import TweetCard from '../../components/tweetCard.vue'
+import CommentBase from '../../components/comments/base.vue'
+import ReadButton from '../../components/readButton.vue'
 
 import axios from 'axios'
+import store from '../../store.js'
 
 export default {
   data: function () {
     return {
       tweet: [],
+      auth: store.state.auth,
     }
   },
   mounted() {
@@ -22,6 +28,8 @@ export default {
   },
   components: {
     TweetCard,
+    CommentBase,
+    ReadButton,
   },
 }
 </script>

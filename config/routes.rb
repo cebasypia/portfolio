@@ -6,10 +6,13 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:show, :create, :update, :destroy]
       resources :reads, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy]
+      get 'tweets/:id/comments', to: 'comments#get_comments'
       post '/tweets/is_read', to: 'reads#is_read'
       post   '/login',   to: 'sessions#create'
       delete '/logout',  to: 'sessions#destroy'
       get '/logged_in',  to: 'sessions#logged_in'
+      get '/current_user', to: 'sessions#get_current_user'
       post '/tweets', controller: 'tweets', action: 'search'
       get '/tweets/user/:id', controller: 'tweets', action: 'user'
       get '/tweets/:id', controller: 'tweets', action: 'show'
