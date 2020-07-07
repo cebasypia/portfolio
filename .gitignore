@@ -33,6 +33,7 @@
 
 # VScode 設定
 /.vscode/
+/.devcontainer/
 
 /public/packs
 /public/packs-test
