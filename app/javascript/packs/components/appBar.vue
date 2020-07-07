@@ -1,22 +1,16 @@
 <template>
   <div>
     <v-app-bar app hide-on-scroll color="amber darken-2" dark>
-      <v-app-bar-nav-icon v-if="current_user" @click="drawer = true">
+      <v-app-bar-nav-icon v-if="auth.logged_in" @click="drawer = true">
         <v-icon>mdi-account</v-icon>
       </v-app-bar-nav-icon>
       <router-link v-else v-bind:to="{ name: 'UsersNewPage' }">
         <v-icon>mdi-account-plus</v-icon>
       </router-link>
-
-      <v-spacer></v-spacer>
-
       <v-toolbar-title @click="scrollTop">Let</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-icon v-if="current_user" @click="logout">mdi-logout</v-icon>
-      <router-link v-bind:to="{ name: 'UsersLoginPage' }">
-        <v-icon v-if="!current_user">mdi-login</v-icon>
+      <v-icon v-if="auth.logged_in" @click="logout">mdi-logout</v-icon>
+      <router-link v-else v-bind:to="{ name: 'UsersLoginPage' }">
+        <v-icon>mdi-login</v-icon>
       </router-link>
     </v-app-bar>
 
@@ -43,12 +37,13 @@
 <script>
 import axios from 'axios'
 import router from '../router.js'
+import store from '../store.js'
 
 export default {
   data: () => ({
     drawer: false,
+    auth: store.state.auth,
   }),
-  props: ['current_user'],
   methods: {
     scrollTop: () => {
       window.scrollTo({
@@ -58,6 +53,7 @@ export default {
     },
     logout: () => {
       axios.delete('/api/v1/logout').then(() => {
+        store.setLoggedIn()
         router.push({ name: 'TweetsIndexPage' })
       })
     },
@@ -68,5 +64,8 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+}
+::v-deep .v-toolbar__content {
+  justify-content: space-between !important;
 }
 </style>

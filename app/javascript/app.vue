@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <AppBar :current_user="current_user"></AppBar>
+    <AppBar></AppBar>
     <v-main>
-      <router-view :current_user="current_user"></router-view>
+      <router-view></router-view>
     </v-main>
     <ToolBar></ToolBar>
   </v-app>
@@ -11,31 +11,16 @@
 <script>
 import AppBar from './packs/components/appBar.vue'
 import ToolBar from './packs/components/toolBar.vue'
-import axios from 'axios'
+import store from './packs/store.js'
 
 export default {
-  data: () => {
-    return {
-      current_user: null,
-    }
-  },
-  mounted() {
-    axios
-      .get('/api/v1/logged_in')
-      .then((response) => (this.current_user = response.data))
-  },
   components: {
     AppBar,
     ToolBar,
   },
-  watch: {
-    $route: function (to, from) {
-      if (to.path !== from.path) {
-        axios
-          .get('/api/v1/logged_in')
-          .then((response) => (this.current_user = response.data))
-      }
-    },
+  mounted() {
+    store.setLoggedIn()
+    store.setCurrentUser()
   },
 }
 </script>
