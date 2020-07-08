@@ -52,6 +52,7 @@
 
 <script>
 import axios from 'axios'
+import store from '../../store.js'
 
 export default {
   data: function () {
@@ -89,8 +90,11 @@ export default {
       axios
         .post('/api/v1/users', this.user)
         .then((response) => {
-          let user = response.data
-          this.$router.push({ name: 'UsersShowPage', params: { id: user.id } })
+          store.refresh()
+          this.$router.push({
+            name: 'UsersShowPage',
+            params: { id: response.data.id },
+          })
         })
         .catch((error) => {
           if (error.response.data && error.response.data.errors) {
