@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  props: ['tweet', 'detail'],
+  props: ['tweet'],
 }
 </script>
 

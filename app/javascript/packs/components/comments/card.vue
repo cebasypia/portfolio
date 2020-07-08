@@ -1,5 +1,15 @@
 <template>
   <v-card class="align-center mx-auto">
+    <v-list-item two-line>
+      <v-list-item-avatar size="42" color="grey">
+        <v-img src=""></v-img>
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-title>
+          {{ comment.user_name }}
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
     <v-card-text>{{ comment.content }}</v-card-text>
     <v-card-actions>
       <v-list-item class="grow">
@@ -14,30 +24,21 @@
 </template>
 <script>
 import axios from 'axios'
+
 export default {
   props: ['comment'],
-  data: function () {
-    return {
-      current_user: {},
-    }
-  },
   methods: {
     destroyComment(id) {
-      axios
-        .delete(`/api/v1/comments/${id}`, {
-          tweet_id: this.$route.params.id,
-        })
-        .then(() => {
-          this.$emit('update')
-        })
+      axios.delete(`/api/v1/comments/${id}`).then(() => {
+        this.$emit('update')
+      })
     },
-  },
-  mounted() {
-    axios
-      .get(`/api/v1/current_user`)
-      .then((response) => (this.current_user = response.data))
   },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-card {
+  margin: 1rem;
+}
+</style>
