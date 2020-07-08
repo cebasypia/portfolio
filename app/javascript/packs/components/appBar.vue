@@ -23,11 +23,11 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
-        <v-list-item>
+        <v-list-item @click="linkTo(`/users/${auth.current_user.id}`)">
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Account</v-list-item-title>
+          <v-list-item-title>My Account</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -56,6 +56,9 @@ export default {
         store.setLoggedIn()
         router.push({ name: 'TweetsIndexPage' })
       })
+    },
+    linkTo: (path) => {
+      router.push({ path: path })
     },
   },
 }
