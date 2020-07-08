@@ -17,7 +17,8 @@ export default {
   },
   mounted() {
     axios
-      .post(`/api/v1/tweets/is_read`, { tweet_id: this.$route.params.id })
+      // 本当はpropsを使いたい
+      .get(`/api/v1/reads/tweet/${this.$route.params.id}`)
       .then((response) => (this.is_read = response.data))
   },
   methods: {
