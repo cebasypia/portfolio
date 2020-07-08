@@ -15,9 +15,7 @@
     </v-card>
     <v-tabs fixed-tabs light color="amber darken-2">
       <v-tab> よんだ！: {{ Object.keys(readTweets).length }} </v-tab>
-      <v-tab>
-        かいた！
-      </v-tab>
+      <v-tab> かいた！: {{ Object.keys(comments).length }} </v-tab>
       <v-tab-item>
         <tweetCard
           v-for="tweet in readTweets"
@@ -25,13 +23,22 @@
           :key="tweet.id"
         ></tweetCard>
       </v-tab-item>
-      <v-tab-item> </v-tab-item>
+      <v-tab-item>
+        <MyCommentCard
+          v-for="comment in comments"
+          :comment="comment"
+          :key="comment.id"
+          @update="update"
+        ></MyCommentCard>
+      </v-tab-item>
     </v-tabs>
   </v-container>
 </template>
 
 <script>
 import TweetCard from '../../components/tweetCard.vue'
+import MyCommentCard from '../../components/comments/myCard.vue'
+
 import axios from 'axios'
 
 export default {
@@ -39,18 +46,38 @@ export default {
     return {
       user: {},
       readTweets: {},
+      comments: {},
     }
   },
   mounted() {
     axios
       .get(`/api/v1/users/${this.$route.params.id}.json`)
       .then((response) => {
-        this.user = response.data.user
-        this.readTweets = response.data.tweets
+        this.user = response.data
       })
+    axios
+      .get(`/api/v1/reads/user/${this.$route.params.id}.json`)
+      .then((response) => {
+        this.readTweets = response.data
+      })
+    axios
+      .get(`/api/v1/comments/user/${this.$route.params.id}.json`)
+      .then((response) => {
+        this.comments = response.data
+      })
+  },
+  methods: {
+    update() {
+      axios
+        .get(`/api/v1/comments/user/${this.$route.params.id}.json`)
+        .then((response) => {
+          this.comments = response.data
+        })
+    },
   },
   components: {
     TweetCard,
+    MyCommentCard,
   },
 }
 </script>
