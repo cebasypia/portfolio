@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: [:show]
+  before_action :set_read_tweets, only: [:show]
 
   # ActiveRecordのレコードが見つからなければ404 not foundを応答する
   rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -7,7 +8,7 @@ class Api::V1::UsersController < ApiController
   end
 
   def show
-    render json: @user
+    render json: { user: @user, tweets: @tweets }
   end
 
   def create
@@ -24,6 +25,14 @@ class Api::V1::UsersController < ApiController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def set_read_tweets
+    reads = User.find(params[:id]).reads
+    @tweets = []
+    reads.each do |read|
+      @tweets.push(read.tweet)
+    end
   end
 
   def user_params
