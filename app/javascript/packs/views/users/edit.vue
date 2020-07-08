@@ -18,35 +18,21 @@
       :counter="20"
       :rules="rules.name"
       label="Name"
+      :placeholder="auth.current_user.name"
       required
     ></v-text-field>
-    <v-text-field
-      v-model="user.email"
-      :rules="rules.email"
-      label="E-mail"
-      required
-    ></v-text-field>
-    <v-text-field
-      v-model="user.password"
-      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-      :rules="rules.password"
-      :type="show1 ? 'text' : 'password'"
-      label="Password"
-      counter
-      @click:append="show1 = !show1"
-    ></v-text-field>
-    <v-text-field
-      v-model="user.password_confirmation"
-      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-      :rules="rules.password_confirmation"
-      :type="show2 ? 'text' : 'password'"
-      label="Password confirmation"
-      counter
-      @click:append="show2 = !show2"
-    ></v-text-field>
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="createUser"
-      >登録</v-btn
-    >
+    <v-textarea
+      id="comment_content"
+      v-model="user.profile"
+      :counter="140"
+      :rules="rules.profile"
+      label="Profile"
+      :placeholder="auth.current_user.profile"
+      auto-grow
+    ></v-textarea>
+    <v-btn :disabled="!valid" color="success" class="mr-4" @click="updateUser">
+      更新
+    </v-btn>
   </v-form>
 </template>
 
@@ -57,38 +43,29 @@ import store from '../../store.js'
 export default {
   data: function () {
     return {
+      auth: store.state.auth,
       user: {
         name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+        profile: '',
       },
       errors: '',
       valid: true,
-      show1: false,
-      show2: false,
       rules: {
         name: [
           (v) => !!v || 'Name is required',
           (v) =>
             (v && v.length <= 10) || 'Name must be less than 10 characters',
         ],
-        email: [
-          (v) => !!v || 'E-mail is required',
-          (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        ],
-        password: [(v) => v.length >= 6 || 'Min 6 characters'],
-        password_confirmation: [
-          (v) => v.length >= 6 || 'Min 6 characters',
-          (v) => v === this.user.password || 'Password must match',
+        profile: [
+          (v) => v.length <= 140 || 'Profile must be less than 140 characters',
         ],
       },
     }
   },
   methods: {
-    createUser: function () {
+    updateUser: function () {
       axios
-        .post('/api/v1/users', this.user)
+        .put('/api/v1/users', this.user)
         .then((response) => {
           store.refresh()
           this.$router.push({

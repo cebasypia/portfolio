@@ -13,13 +13,25 @@ class Api::V1::CommentsController < ApiController
 
   def destroy
     comment = current_user.comments.find_by(id: params[:id])
-    tweet_id = comment.tweet.id
     comment.destroy
-    render json: Comment.where(tweet_id: tweet_id)
+    head :no_content
   end
 
-  def get_comments
+  def get_tweet_comments
+    @comments = []
     comments = Comment.where(tweet_id: params[:id]).order(created_at: "DESC")
-    render json: comments
+    comments.each do |comment|
+      @comments.push(comment.json)
+    end
+    render json: @comments
+  end
+
+  def get_user_comments
+    @comments = []
+    comments = Comment.where(user_id: params[:id]).order(created_at: "DESC")
+    comments.each do |comment|
+      @comments.push(comment.json)
+    end
+    render json: @comments
   end
 end

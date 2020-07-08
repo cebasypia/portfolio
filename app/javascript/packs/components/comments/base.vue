@@ -18,21 +18,19 @@ export default {
   data: function () {
     return {
       comments: [],
-      dialog: false,
     }
   },
   mounted() {
     axios
-      .get(`/api/v1/tweets/${this.$route.params.id}/comments`)
+      .get(`/api/v1/comments/tweet/${this.$route.params.id}`)
       .then((response) => (this.comments = response.data))
   },
   methods: {
     update() {
       axios
-        .get(`/api/v1/tweets/${this.$route.params.id}/comments`)
+        .get(`/api/v1/comments/tweet/${this.$route.params.id}`)
         .then((response) => {
           this.comments = response.data
-          this.dialog = false
         })
     },
   },

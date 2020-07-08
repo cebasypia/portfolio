@@ -12,6 +12,15 @@ class Api::V1::ReadsController < ApiController
   end
 
   def is_read
-    render json: current_user.reads.where(tweet_id: params[:tweet_id]).present?
+    render json: current_user.reads.where(tweet_id: params[:id]).present?
+  end
+
+  def get_user_tweets
+    @read_tweets = []
+    reads = Read.where(user_id: params[:id]).order(created_at: "DESC")
+    reads.each do |read|
+      @read_tweets.push(read.tweet)
+    end
+    render json: @read_tweets
   end
 end
