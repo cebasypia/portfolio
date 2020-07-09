@@ -4,7 +4,8 @@
       <v-list-item-avatar size="73" color="grey">
         <router-link
           v-bind:to="{
-            path: `/tweets/users/${tweet.user_id}`,
+            name: 'TweetsUserPage',
+            params: { id: tweet.user_id },
           }"
         >
           <v-img :src="tweet.user_profile_image_url"></v-img>
