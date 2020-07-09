@@ -8,6 +8,7 @@
 </template>
 <script>
 import axios from 'axios'
+
 export default {
   props: ['tweet_id'],
   data: function () {
@@ -15,23 +16,24 @@ export default {
       is_read: false,
     }
   },
-  mounted() {
-    axios
-      // 本当はpropsを使いたい
-      .get(`/api/v1/reads/tweet/${this.$route.params.id}`)
-      .then((response) => (this.is_read = response.data))
+  asyncComputed: {
+    is_read() {
+      return axios
+        .get(`/api/v1/reads/tweet/${this.tweet_id}`)
+        .then((response) => (this.is_read = response.data))
+    },
   },
   methods: {
     createRead: function () {
       axios
         .post(`/api/v1/reads`, {
-          tweet_id: this.$route.params.id,
+          tweet_id: this.tweet_id,
         })
         .then((response) => (this.is_read = response.data))
     },
     destroyRead: function () {
       axios
-        .delete(`/api/v1/reads/${this.$route.params.id}`)
+        .delete(`/api/v1/reads/${this.tweet_id}`)
         .then((response) => (this.is_read = response.data))
     },
   },
