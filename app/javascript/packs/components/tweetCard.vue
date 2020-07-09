@@ -40,12 +40,25 @@
       <v-col cols="3"> いいね: {{ tweet.favorite_count }} </v-col>
       <v-col cols="auto"> リツイート数: {{ tweet.retweet_count }} </v-col>
     </v-row>
+    <ReadButton v-if="auth.logged_in" :tweet_id="tweet.id"></ReadButton>
   </v-card>
 </template>
 
 <script>
+import ReadButton from './readButton.vue'
+
+import store from '../store.js'
+
 export default {
   props: ['tweet'],
+  data: function () {
+    return {
+      auth: store.state.auth,
+    }
+  },
+  components: {
+    ReadButton,
+  },
 }
 </script>
 
