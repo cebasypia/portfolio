@@ -2,9 +2,7 @@
   <v-container fluid>
     <v-card>
       <v-list-item two-line>
-        <v-list-item-avatar size="73" color="grey">
-          <v-img src=""></v-img>
-        </v-list-item-avatar>
+        <UserImage :user="user" :is_link="false"></UserImage>
         <v-list-item-content>
           <v-list-item-title class="user-name">
             {{ user.name }}
@@ -38,6 +36,7 @@
 <script>
 import TweetCard from '../../components/tweetCard.vue'
 import MyCommentCard from '../../components/comments/myCard.vue'
+import UserImage from '../../components/userImage.vue'
 
 import axios from 'axios'
 
@@ -78,6 +77,7 @@ export default {
   components: {
     TweetCard,
     MyCommentCard,
+    UserImage,
   },
 }
 </script>

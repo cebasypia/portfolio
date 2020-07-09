@@ -2,7 +2,11 @@
   <div>
     <v-app-bar app hide-on-scroll color="amber darken-2" dark>
       <v-app-bar-nav-icon v-if="auth.logged_in" @click="drawer = true">
-        <v-icon>mdi-account</v-icon>
+        <UserImage
+          :size="30"
+          :user="auth.current_user"
+          :is_link="false"
+        ></UserImage>
       </v-app-bar-nav-icon>
       <router-link v-else v-bind:to="{ name: 'UsersNewPage' }">
         <v-icon>mdi-account-plus</v-icon>
@@ -16,7 +20,7 @@
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
-        <v-list-item>
+        <v-list-item @click="linkTo(`/`)">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -29,6 +33,13 @@
           </v-list-item-icon>
           <v-list-item-title>My Account</v-list-item-title>
         </v-list-item>
+
+        <v-list-item @click="linkTo(`/users/edit`)">
+          <v-list-item-icon>
+            <v-icon>mdi-account-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ユーザー情報の変更</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -38,6 +49,8 @@
 import axios from 'axios'
 import router from '../router.js'
 import store from '../store.js'
+
+import UserImage from './userImage.vue'
 
 export default {
   data: () => ({
@@ -61,6 +74,9 @@ export default {
       router.push({ path: path })
     },
   },
+  components: {
+    UserImage,
+  },
 }
 </script>
 
@@ -73,5 +89,8 @@ a {
 }
 ::v-deep .v-toolbar__title {
   padding-left: 0 !important;
+}
+::v-deep .v-list-item__avatar {
+  margin-right: 0 !important;
 }
 </style>

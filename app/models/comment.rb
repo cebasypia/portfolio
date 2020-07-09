@@ -8,7 +8,7 @@ class Comment < ApplicationRecord
     comment = {}
     comment["id"] = id
     comment["content"] = content
-    comment["user_name"] = user.name
+    comment["user"] = user
     comment["tweet"] = tweet # self.tweet
     comment
   end

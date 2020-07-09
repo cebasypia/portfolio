@@ -1,52 +1,69 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-alert
-      v-if="errors.length != 0"
-      border="bottom"
-      colored-border
-      type="warning"
-      elevation="2"
-    >
-      <ul v-for="error in errors" :key="error">
-        <li>
-          <font color="red">{{ error }}</font>
-        </li>
-      </ul>
-    </v-alert>
-    <v-text-field
-      v-model="user.name"
-      :counter="20"
-      :rules="rules.name"
-      label="Name"
-      :placeholder="auth.current_user.name"
-      required
-    ></v-text-field>
-    <v-textarea
-      id="comment_content"
-      v-model="user.profile"
-      :counter="140"
-      :rules="rules.profile"
-      label="Profile"
-      :placeholder="auth.current_user.profile"
-      auto-grow
-    ></v-textarea>
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="updateUser">
-      更新
-    </v-btn>
-  </v-form>
+  <div>
+    <v-list-item>
+      <UserImage :size="80" :user="user" :is_link="false"></UserImage>
+      <a href="https://ja.gravatar.com/">by Gravator</a>
+    </v-list-item>
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-alert
+        v-if="errors.length != 0"
+        border="bottom"
+        colored-border
+        type="warning"
+        elevation="2"
+      >
+        <ul v-for="error in errors" :key="error">
+          <li>
+            <font color="red">{{ error }}</font>
+          </li>
+        </ul>
+      </v-alert>
+      <v-text-field
+        v-model="user.name"
+        :counter="20"
+        :rules="rules.name"
+        label="Name"
+        required
+      ></v-text-field>
+      <v-text-field
+        v-model="user.email"
+        :rules="rules.email"
+        label="E-mail"
+        required
+      ></v-text-field>
+      <v-textarea
+        id="comment_content"
+        v-model="user.profile"
+        :counter="140"
+        :rules="rules.profile"
+        label="Profile"
+        auto-grow
+      ></v-textarea>
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="updateUser"
+      >
+        更新
+      </v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import store from '../../store.js'
 
+import UserImage from '../../components/userImage.vue'
+
 export default {
   data: function () {
     return {
-      auth: store.state.auth,
       user: {
-        name: '',
-        profile: '',
+        name: store.state.auth.current_user.name,
+        email: store.state.auth.current_user.email,
+        profile: store.state.auth.current_user.profile,
       },
       errors: '',
       valid: true,
@@ -56,8 +73,13 @@ export default {
           (v) =>
             (v && v.length <= 10) || 'Name must be less than 10 characters',
         ],
+        email: [
+          (v) => !!v || 'E-mail is required',
+          (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
         profile: [
-          (v) => v.length <= 140 || 'Profile must be less than 140 characters',
+          (v) =>
+            !v || v.length <= 140 || 'Profile must be less than 140 characters',
         ],
       },
     }
@@ -80,11 +102,21 @@ export default {
         })
     },
   },
+  components: {
+    UserImage,
+  },
 }
 </script>
 
 <style scoped>
 ul {
   list-style: none;
+}
+::v-deep .v-list-item {
+  align-items: flex-end;
+  justify-content: center;
+}
+a {
+  font-size: 0.8rem;
 }
 </style>

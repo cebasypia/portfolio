@@ -9,14 +9,15 @@ export default {
   },
   setLoggedIn() {
     axios.get('/api/v1/logged_in').then((response) => {
-      console.log(response.data)
       this.state.auth.logged_in = response.data
+      console.log(`logged_in: ${this.state.auth.logged_in}`)
     })
   },
   setCurrentUser() {
-    axios
-      .get('/api/v1/current_user')
-      .then((response) => (this.state.auth.current_user = response.data))
+    axios.get('/api/v1/current_user').then((response) => {
+      this.state.auth.current_user = response.data
+      console.log(`current_user: ${this.state.auth.current_user}`)
+    })
   },
   refresh() {
     this.setLoggedIn()

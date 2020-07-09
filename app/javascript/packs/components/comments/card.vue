@@ -1,9 +1,7 @@
 <template>
   <v-card class="align-center mx-auto">
     <v-list-item two-line>
-      <v-list-item-avatar size="42" color="grey">
-        <v-img src=""></v-img>
-      </v-list-item-avatar>
+      <UserImage :size="42" :user="comment.user"></UserImage>
       <v-list-item-content>
         <v-list-item-title>
           {{ comment.user_name }}
@@ -25,14 +23,22 @@
 <script>
 import axios from 'axios'
 
+import UserImage from '../../components/userImage.vue'
+
 export default {
   props: ['comment'],
+  data: function () {
+    return {}
+  },
   methods: {
     destroyComment(id) {
       axios.delete(`/api/v1/comments/${id}`).then(() => {
         this.$emit('update')
       })
     },
+  },
+  components: {
+    UserImage,
   },
 }
 </script>
