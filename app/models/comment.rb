@@ -9,11 +9,9 @@ class Comment < ApplicationRecord
   validates :content, presence: true, length: { maximum: 140 }
 
   def json
-    comment = {}
-    comment["id"] = id
-    comment["content"] = content
+    comment = attributes
     comment["created_at"] = time_ago_in_words created_at
-    comment["user"] = user
+    comment["user"] = user.json
     comment["tweet"] = tweet # self.tweet
     comment
   end
