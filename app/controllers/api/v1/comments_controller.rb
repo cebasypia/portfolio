@@ -34,4 +34,13 @@ class Api::V1::CommentsController < ApiController
     end
     render json: @comments
   end
+
+  def get_recent_comments
+    @comments = []
+    comments = Comment.limit(10).order(created_at: "DESC")
+    comments.each do |comment|
+      @comments.push(comment.json)
+    end
+    render json: @comments
+  end
 end
