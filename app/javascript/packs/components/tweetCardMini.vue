@@ -10,6 +10,9 @@
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
+    <v-card-text v-if="tweet.error" class="error-text">{{
+      tweet.error
+    }}</v-card-text>
     <v-card-text class="text">{{ tweet.full_text }}</v-card-text>
     <v-row justify="space-around" fill-height class="info-row">
       <v-col cols="auto"> いいね: {{ tweet.favorite_count }} </v-col>
@@ -34,6 +37,9 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+}
+.error-text {
+  color: red !important;
 }
 .text {
   color: rgba(0, 0, 0, 0.87);
