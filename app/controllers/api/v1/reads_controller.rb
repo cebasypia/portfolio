@@ -24,11 +24,7 @@ class Api::V1::ReadsController < ApiController
     @reads = []
     reads = Read.limit(10).order(created_at: "DESC")
     reads.each do |read|
-      @read = {}
-      @read[:id] = read.id
-      @read[:created_at] = time_ago_in_words read.created_at
-      @read[:user] = read.user
-      @read[:tweet] = read.tweet
+      @read = read.json
       @reads.push(@read)
     end
     render json: @reads
