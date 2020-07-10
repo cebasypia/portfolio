@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-app-bar app bottom color="amber darken-2" dark>
-      <v-icon>mdi-school</v-icon>
-
+      <router-link v-bind:to="{ name: 'RecordsIndexPage' }">
+        <v-icon>mdi-school</v-icon>
+      </router-link>
       <v-spacer></v-spacer>
 
       <router-link v-bind:to="{ name: 'TweetsIndexPage' }">
