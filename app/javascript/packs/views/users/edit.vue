@@ -62,7 +62,7 @@ export default {
     return {
       user: {
         name: store.state.auth.current_user.name,
-        email: store.state.auth.current_user.email,
+        image_url: store.state.auth.current_user.image_url,
         profile: store.state.auth.current_user.profile,
       },
       errors: '',
