@@ -10,4 +10,13 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
+
+  def json
+    user = attributes
+    user.delete("email")
+    user.delete("password_digest")
+    user.delete("created_at")
+    user.delete("updated_at")
+    user
+  end
 end
