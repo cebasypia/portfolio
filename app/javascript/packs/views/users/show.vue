@@ -22,12 +22,13 @@
         ></tweetCard>
       </v-tab-item>
       <v-tab-item>
-        <MyCommentCard
+        <CommentCard
           v-for="comment in comments"
           :comment="comment"
           :key="comment.id"
+          :display_user="false"
           @update="update"
-        ></MyCommentCard>
+        ></CommentCard>
       </v-tab-item>
     </v-tabs>
   </v-container>
@@ -35,7 +36,7 @@
 
 <script>
 import TweetCard from '../../components/tweetCard.vue'
-import MyCommentCard from '../../components/comments/myCard.vue'
+import CommentCard from '../../components/comments/card.vue'
 import UserImage from '../../components/userImage.vue'
 
 import axios from 'axios'
@@ -76,7 +77,7 @@ export default {
   },
   components: {
     TweetCard,
-    MyCommentCard,
+    CommentCard,
     UserImage,
   },
 }
