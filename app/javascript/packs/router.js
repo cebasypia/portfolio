@@ -53,9 +53,6 @@ const router = new VueRouter({
       path: '/users/:id(\\d+)',
       name: 'UsersShowPage',
       component: UsersShowPage,
-      meta: {
-        requiresAuth: true,
-      },
     },
     { path: '/users/new', name: 'UsersNewPage', component: UsersNewPage },
     {
