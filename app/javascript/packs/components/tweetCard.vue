@@ -1,25 +1,25 @@
 <template>
-  <v-card>
+  <v-card class="tweet-card">
     <v-list-item two-line>
       <v-list-item-avatar size="73" color="grey">
         <router-link
           v-bind:to="{
             name: 'TweetsUserPage',
-            params: { id: tweet.user_id },
+            params: { id: tweet.user.id },
           }"
         >
-          <v-img :src="tweet.user_profile_image_url"></v-img>
+          <v-img :src="tweet.user.profile_image_url"></v-img>
         </router-link>
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-subtitle>{{ tweet.created_at }}</v-list-item-subtitle>
         <router-link
           v-bind:to="{
-            path: `/tweets/users/${tweet.user_id}`,
+            path: `/tweets/users/${tweet.user.id}`,
           }"
         >
           <v-list-item-title class="user-name">
-            {{ tweet.user_name }}
+            {{ tweet.user.name }}
           </v-list-item-title>
         </router-link>
       </v-list-item-content>
@@ -30,6 +30,9 @@
       }"
     >
       <v-card-text class="text">{{ tweet.full_text }}</v-card-text>
+      <div v-if="tweet.entities.media" class="img">
+        <v-img :src="tweet.entities.media[0].media_url"></v-img>
+      </div>
     </router-link>
     <v-row justify="space-around" fill-height class="info-row">
       <v-col cols="3">
@@ -50,7 +53,11 @@ import ReadButton from './readButton.vue'
 import store from '../store.js'
 
 export default {
-  props: ['tweet'],
+  props: {
+    tweet: {
+      type: Object,
+    },
+  },
   data: function () {
     return {
       auth: store.state.auth,
@@ -63,11 +70,18 @@ export default {
 </script>
 
 <style scoped>
+.tweet-card {
+  margin-bottom: 1rem;
+}
 a {
   text-decoration: none;
 }
 .text {
   color: rgba(0, 0, 0, 0.87);
+}
+::v-deep .v-image {
+  margin: 0.5rem;
+  border-radius: 5px;
 }
 .user-name {
   color: rgba(0, 0, 0, 0.87);

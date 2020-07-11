@@ -1,4 +1,8 @@
+require 'action_view'
+require 'action_view/helpers'
+
 class Api::V1::TweetsController < ApiController
+  include ActionView::Helpers::DateHelper
   def search
     @tweets = []
     since_id = nil
@@ -15,18 +19,13 @@ class Api::V1::TweetsController < ApiController
     )
     # 取得したツイートをモデルに渡す
     tweets.take(10).each do |tweet|
-      @tweet = Tweet.new(
-        id: tweet.attrs[:id_str],
-        full_text: tweet.attrs[:full_text],
-        favorite_count: tweet.attrs[:favorite_count],
-        retweet_count: tweet.attrs[:retweet_count],
-        created_at: tweet.attrs[:created_at],
-        uri: tweet.uri.to_s,
-        user_id: tweet.user.attrs[:id_str],
-        user_name: tweet.user.attrs[:name],
-        user_profile_image_url: tweet.user.profile_image_url_https(size = :bigger).to_s,
-        user_uri: tweet.user.uri .to_s
-      )
+      @tweet = tweet.attrs
+      @tweet[:id] = @tweet[:id_str]
+      @tweet[:created_at] = time_ago_in_words tweet.created_at
+      @tweet[:uri] = tweet.uri.to_s
+      @tweet[:user][:id] = tweet.attrs[:user][:id_str]
+      @tweet[:user][:profile_image_url] = tweet.user.profile_image_url_https(size = :bigger).to_s
+      @tweet[:user][:user_uri] = tweet.user.uri.to_s
       @tweets.push(@tweet)
     end
     render json: @tweets
@@ -35,18 +34,13 @@ class Api::V1::TweetsController < ApiController
   def show
     client = set_client
     tweet = client.status(params[:id], tweet_mode: "extended")
-    @tweet = Tweet.new(
-      id: tweet.attrs[:id_str],
-      full_text: tweet.attrs[:full_text],
-      favorite_count: tweet.attrs[:favorite_count],
-      retweet_count: tweet.attrs[:retweet_count],
-      created_at: tweet.attrs[:created_at],
-      uri: tweet.uri.to_s,
-      user_id: tweet.user.attrs[:id_str],
-      user_name: tweet.user.attrs[:name],
-      user_profile_image_url: tweet.user.profile_image_url_https(size = :bigger).to_s,
-      user_uri: tweet.user.uri .to_s
-    )
+    @tweet = tweet.attrs
+    @tweet[:id] = @tweet[:id_str]
+    @tweet[:created_at] = time_ago_in_words tweet.created_at
+    @tweet[:uri] = tweet.uri.to_s
+    @tweet[:user][:id] = tweet.attrs[:user][:id_str]
+    @tweet[:user][:profile_image_url] = tweet.user.profile_image_url_https(size = :bigger).to_s
+    @tweet[:user][:user_uri] = tweet.user.uri.to_s
     render json: @tweet
   end
 
