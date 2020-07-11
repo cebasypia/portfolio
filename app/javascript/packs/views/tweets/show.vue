@@ -10,6 +10,7 @@
       @update="update"
     ></CommentCard>
     <CommentForm id="comment_form" @update="update"></CommentForm>
+    <div id="bottom"></div>
   </v-container>
 </template>
 
@@ -24,7 +25,7 @@ import store from '../../store.js'
 export default {
   data: function () {
     return {
-      tweet: [],
+      tweet: {},
       comments: [],
       auth: store.state.auth,
     }
@@ -62,5 +63,8 @@ export default {
   left: 0;
   width: 100%;
   background-color: whitesmoke;
+}
+#bottom {
+  height: 70px;
 }
 </style>
