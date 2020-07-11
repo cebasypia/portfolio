@@ -11,7 +11,6 @@
 <script>
 import AppBar from './packs/components/appBar.vue'
 import ToolBar from './packs/components/toolBar.vue'
-import store from './packs/store.js'
 
 export default {
   components: {
@@ -19,8 +18,7 @@ export default {
     ToolBar,
   },
   mounted() {
-    store.setLoggedIn()
-    store.setCurrentUser()
+    this.$store.dispatch('resetAuth')
   },
 }
 </script>

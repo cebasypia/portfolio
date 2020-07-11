@@ -53,7 +53,6 @@
 
 <script>
 import axios from 'axios'
-import store from '../../store.js'
 
 import UserImage from '../../components/userImage.vue'
 
@@ -61,10 +60,10 @@ export default {
   data: function () {
     return {
       user: {
-        name: store.state.auth.current_user.name,
-        image_url: store.state.auth.current_user.image_url,
-        email: store.state.auth.current_user.email,
-        profile: store.state.auth.current_user.profile,
+        name: this.$store.state.auth.current_user.name,
+        image_url: this.$store.state.auth.current_user.image_url,
+        email: this.$store.state.auth.current_user.email,
+        profile: this.$store.state.auth.current_user.profile,
       },
       errors: '',
       valid: true,
@@ -90,7 +89,7 @@ export default {
       axios
         .put('/api/v1/users', this.user)
         .then((response) => {
-          store.refresh()
+          this.$store.dispatch('resetAuth')
           this.$router.push({
             name: 'UsersShowPage',
             params: { id: response.data.id },

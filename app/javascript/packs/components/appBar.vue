@@ -48,15 +48,18 @@
 <script>
 import axios from 'axios'
 import router from '../router.js'
-import store from '../store.js'
 
 import UserImage from './userImage.vue'
 
 export default {
   data: () => ({
     drawer: false,
-    auth: store.state.auth,
   }),
+  computed: {
+    auth() {
+      return this.$store.state.auth
+    },
+  },
   methods: {
     scrollTop: () => {
       window.scrollTo({
@@ -64,9 +67,9 @@ export default {
         behavior: 'smooth',
       })
     },
-    logout: () => {
+    logout: function () {
       axios.delete('/api/v1/logout').then(() => {
-        store.setLoggedIn()
+        this.$store.dispatch('resetAuth')
         router.push({ name: 'TweetsIndexPage' })
       })
     },

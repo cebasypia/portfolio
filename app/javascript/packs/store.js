@@ -1,26 +1,29 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios'
 
-export default {
+Vue.use(Vuex)
+
+export default new Vuex.Store({
   state: {
     auth: {
-      logged_in: false,
       current_user: {},
+      logged_in: false,
     },
   },
-  setLoggedIn() {
-    axios.get('/api/v1/logged_in').then((response) => {
-      this.state.auth.logged_in = response.data
-      console.log(`logged_in: ${this.state.auth.logged_in}`)
-    })
+  getters: {},
+  mutations: {
+    setAuth(state, auth) {
+      state.auth = auth
+    },
   },
-  setCurrentUser() {
-    axios.get('/api/v1/current_user').then((response) => {
-      this.state.auth.current_user = response.data
-      console.log(`current_user: ${this.state.auth.current_user}`)
-    })
+  actions: {
+    resetAuth(context) {
+      axios
+        .get('/api/v1/auth')
+        .then((response) => context.commit('setAuth', response.data))
+    },
   },
-  refresh() {
-    this.setLoggedIn()
-    this.setCurrentUser()
-  },
-}
+  plugins: [createPersistedState()],
+})
