@@ -17,7 +17,6 @@ Rails.application.routes.draw do
       post   '/login',   to: 'sessions#create'
       delete '/logout',  to: 'sessions#destroy'
       get '/logged_in',  to: 'sessions#logged_in'
-      get '/current_user', to: 'sessions#get_current_user'
       post '/tweets', controller: 'tweets', action: 'search'
       get '/tweets/user/:id', controller: 'tweets', action: 'user'
       get '/tweets/:id', controller: 'tweets', action: 'show'

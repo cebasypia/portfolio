@@ -16,10 +16,6 @@ class Api::V1::SessionsController < ApiController
   end
 
   def logged_in
-    render json: !!current_user
-  end
-
-  def get_current_user
-    render json: current_user
+    render json: { current_user: current_user, logged_in: !!current_user }
   end
 end
