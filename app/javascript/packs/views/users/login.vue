@@ -16,6 +16,7 @@
     <v-text-field
       v-model="session.email"
       :rules="rules.email"
+      type="email"
       label="E-mail"
       required
     ></v-text-field>
