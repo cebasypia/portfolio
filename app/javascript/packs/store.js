@@ -21,7 +21,7 @@ export default new Vuex.Store({
   actions: {
     resetAuth(context) {
       axios
-        .get('/api/v1/logged_in')
+        .get('/api/v1/auth')
         .then((response) => context.commit('setAuth', response.data))
     },
   },

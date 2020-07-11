@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       get '/reads/user/:id', to: 'reads#get_user_tweets'
       post   '/login',   to: 'sessions#create'
       delete '/logout',  to: 'sessions#destroy'
-      get '/logged_in',  to: 'sessions#logged_in'
+      get '/auth',  to: 'sessions#get_auth'
       post '/tweets', controller: 'tweets', action: 'search'
       get '/tweets/user/:id', controller: 'tweets', action: 'user'
       get '/tweets/:id', controller: 'tweets', action: 'show'

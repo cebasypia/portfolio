@@ -15,7 +15,7 @@ class Api::V1::SessionsController < ApiController
     head :no_content
   end
 
-  def logged_in
+  def get_auth
     render json: { current_user: current_user, logged_in: !!current_user }
   end
 end
