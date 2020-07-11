@@ -50,18 +50,16 @@
 <script>
 import ReadButton from './readButton.vue'
 
-import store from '../store.js'
-
 export default {
   props: {
     tweet: {
       type: Object,
     },
   },
-  data: function () {
-    return {
-      auth: store.state.auth,
-    }
+  computed: {
+    auth() {
+      return this.$store.state.auth
+    },
   },
   components: {
     ReadButton,

@@ -36,7 +36,6 @@
 
 <script>
 import axios from 'axios'
-import store from '../../store.js'
 
 export default {
   data: function () {
@@ -63,7 +62,7 @@ export default {
       axios
         .post('/api/v1/login', this.session)
         .then(() => {
-          store.refresh()
+          this.$store.dispatch('resetAuth')
           this.$router.push({ path: this.prevRoute.path })
         })
         .catch((error) => {

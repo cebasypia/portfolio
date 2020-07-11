@@ -5,6 +5,7 @@ import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loade
 import App from '../app.vue'
 import router from './router.js'
 import AsyncComputed from 'vue-async-computed'
+import store from './store.js'
 
 Vue.use(Vuetify)
 const vuetify = new Vuetify()
@@ -12,6 +13,7 @@ Vue.use(AsyncComputed)
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    store,
     vuetify,
     router,
     render: (h) => h(App),

@@ -20,14 +20,12 @@ import CommentCard from '../../components/comments/card.vue'
 import CommentForm from '../../components/comments/form.vue'
 
 import axios from 'axios'
-import store from '../../store.js'
 
 export default {
   data: function () {
     return {
       tweet: {},
       comments: [],
-      auth: store.state.auth,
     }
   },
   mounted() {

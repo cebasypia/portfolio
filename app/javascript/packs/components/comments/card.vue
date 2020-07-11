@@ -28,7 +28,6 @@
 </template>
 <script>
 import axios from 'axios'
-import store from '../../store.js'
 
 import UserImage from '../../components/userImage.vue'
 import TweetCardMini from '../../components/tweetCardMini.vue'
@@ -49,11 +48,7 @@ export default {
       default: true,
     },
   },
-  data: function () {
-    return {
-      auth: store.state.auth,
-    }
-  },
+
   methods: {
     destroyComment(id) {
       axios.delete(`/api/v1/comments/${id}`).then(() => {
@@ -62,8 +57,11 @@ export default {
     },
   },
   computed: {
+    auth() {
+      return this.$store.state.auth
+    },
     is_mime: function () {
-      if (this.auth.logged_in) {
+      if (this.$store.state.auth.logged_in) {
         return this.comment.user.id === this.auth.current_user.id
       } else {
         return false
