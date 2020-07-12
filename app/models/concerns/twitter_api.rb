@@ -1,3 +1,6 @@
+require 'action_view'
+require 'action_view/helpers'
+
 module TwitterApi
   extend ActiveSupport::Concern
 
@@ -20,6 +23,8 @@ module TwitterApi
 
   # クラスメソッド
   module ClassMethods
+    include ActionView::Helpers::DateHelper
+
     def tweets(tweet_ids)
       client = set_client
       @tweets = []
@@ -28,6 +33,7 @@ module TwitterApi
         tweets.each do |tweet|
           @tweet = tweet.attrs
           @tweet[:id] = @tweet[:id_str]
+          @tweet[:created_at] = time_ago_in_words tweet.created_at
           @tweet[:uri] = tweet.uri.to_s
           @tweet[:user][:id] = tweet.attrs[:user][:id_str]
           @tweet[:user][:profile_image_url] = tweet.user.profile_image_url_https(size = :bigger).to_s
