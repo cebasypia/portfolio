@@ -12,7 +12,7 @@ class Read < ApplicationRecord
     reads = attributes
     reads["created_at"] = time_ago_in_words created_at
     reads["user"] = user.json
-    reads["tweet"] = tweet # self.tweet
+    # reads["tweet"] = tweet # self.tweet
     reads
   end
 end
