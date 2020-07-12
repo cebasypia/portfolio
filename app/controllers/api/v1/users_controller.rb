@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: [:show]
+  before_action :authenticate_user, only: [:update]
 
   # ActiveRecordのレコードが見つからなければ404 not foundを応答する
   rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -48,6 +49,6 @@ class Api::V1::UsersController < ApiController
 
   def get_gravatar_url(email)
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
-    gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
+    "https://secure.gravatar.com/avatar/#{gravatar_id}"
   end
 end
