@@ -1,4 +1,6 @@
 class Api::V1::CommentsController < ApiController
+  before_action :authenticate_user, only: [:create, :destroy]
+
   def create
     comment = current_user.comments.new(
       tweet_id: params[:tweet_id],
@@ -18,29 +20,38 @@ class Api::V1::CommentsController < ApiController
   end
 
   def get_tweet_comments
-    @comments = []
     comments = Comment.where(tweet_id: params[:id]).order(created_at: "DESC")
-    comments.each do |comment|
-      @comments.push(comment.json)
-    end
+    @comments = add_tweets(comments)
     render json: @comments
   end
 
   def get_user_comments
-    @comments = []
     comments = Comment.where(user_id: params[:id]).order(created_at: "DESC")
-    comments.each do |comment|
-      @comments.push(comment.json)
-    end
+    @comments = add_tweets(comments)
     render json: @comments
   end
 
   def get_recent_comments
-    @comments = []
-    comments = Comment.limit(10).order(created_at: "DESC")
-    comments.each do |comment|
-      @comments.push(comment.json)
-    end
+    comments = Comment.limit(20).order(created_at: "DESC")
+    @comments = add_tweets(comments)
     render json: @comments
+  end
+
+  private
+
+  def add_tweets(comments)
+    @comments = []
+    tweet_ids = comments.map { |comment| comment.tweet_id }
+    tweets = Comment.tweets(tweet_ids)
+    comments.each do |comment|
+      @comment = comment.json
+      tweets.each do |tweet|
+        if @comment["tweet_id"] == tweet[:id]
+          @comment["tweet"] = tweet
+        end
+      end
+      @comments.push(@comment)
+    end
+    @comments
   end
 end
