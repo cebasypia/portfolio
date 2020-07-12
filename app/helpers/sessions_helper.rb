@@ -16,4 +16,10 @@ module SessionsHelper
       @current_user ||= User.find_by(id: session[:user_id])
     end
   end
+
+  def authenticate_user
+    unless session[:user_id]
+      head :no_content
+    end
+  end
 end
