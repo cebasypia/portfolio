@@ -7,15 +7,17 @@ class Api::V1::TweetsController < ApiController
     @tweets = []
     since_id = nil
     client = set_client
+    max_id = params[:max_id] || 0
     # リツイートを除く、検索ワードにひっかかった最新10件のツイートを取得する
     tweets = client.search(
-      params[:word],
-      lang: "en",
+      "#{params[:word]} #{params[:from]}",
+      lang: params[:lang],
       tweet_mode: "extended",
       count: 10,
-      result_type: "recent",
+      result_type: params[:result_type],
       exclude: "retweets",
-      since_id: since_id
+      since_id: since_id,
+      max_id: max_id.to_i - 1
     )
     # 取得したツイートをモデルに渡す
     tweets.take(10).each do |tweet|

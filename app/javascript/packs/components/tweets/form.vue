@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="search_word"
+      v-model="word"
       label="キーワード検索"
       append-outer-icon="mdi-magnify"
       @click:append-outer="search"
@@ -11,12 +11,17 @@
 </template>
 <script>
 export default {
-  data: () => ({
-    valid: false,
-    search_word: '',
-  }),
+  data: function () {
+    return {
+      valid: false,
+      word: this.$store.state.searches.word,
+    }
+  },
   methods: {
     search() {
+      this.$store.commit('setSearches', {
+        word: this.word,
+      })
       this.$emit('search', this.search_word)
     },
   },

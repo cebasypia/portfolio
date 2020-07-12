@@ -11,11 +11,21 @@ export default new Vuex.Store({
       current_user: {},
       logged_in: false,
     },
+    searches: {
+      word: 'japan',
+      lang: 'en',
+      result_type: 'mixed',
+    },
   },
   getters: {},
   mutations: {
     setAuth(state, auth) {
       state.auth = auth
+    },
+    setSearches(state, searches) {
+      for (let k of Object.keys(searches)) {
+        state.searches[k] = searches[k]
+      }
     },
   },
   actions: {
