@@ -24,10 +24,11 @@
         return-object
       ></v-select>
       <v-text-field
-        v-model="user"
+        v-model="searches.user"
         label="@ユーザーID"
         hint="特定のユーザーが投稿したツイート"
         persistent-hint
+        clearable
       ></v-text-field>
       <div class="text-end">
         <v-btn :disabled="!valid" color="success" right @click="searchTweets">
@@ -48,14 +49,14 @@ export default {
         word: this.$store.state.searches.word,
         lang: this.$store.state.searches.lang,
         result_type: this.$store.state.searches.result_type,
+        user: this.$store.state.searches.user,
       },
-      user: '',
       languages: [
         { label: '英語', code: 'en' },
         { label: '日本語', code: 'ja' },
       ],
       result_types: [
-        { label: '人気 & 最新', code: 'mixed' },
+        // { label: '人気 & 最新', code: 'mixed' },
         { label: '人気', code: 'popular' },
         { label: '最新', code: 'recent' },
       ],
@@ -78,7 +79,7 @@ export default {
   },
   computed: {
     from: function () {
-      if (this.user) return `from:${this.user}`
+      if (this.searches.user) return `from:${this.searches.user}`
       return ''
     },
   },
