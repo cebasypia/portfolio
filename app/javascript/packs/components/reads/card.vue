@@ -1,5 +1,5 @@
 <template>
-  <v-card class="align-center mx-auto">
+  <v-card class="read-card align-center mx-auto">
     <v-list-item two-line>
       <UserImage :size="73" :user="read.user"></UserImage>
       <v-list-item-content>
@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style scoped>
+.read-card {
+  margin-bottom: 1rem;
+}
 .tweet-card {
   box-shadow: initial !important;
   border-color: rgba(0, 172, 237, 1);

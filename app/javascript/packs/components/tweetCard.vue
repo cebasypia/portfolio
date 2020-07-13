@@ -43,12 +43,14 @@
       <v-col cols="3"> いいね: {{ tweet.favorite_count }} </v-col>
       <v-col cols="auto"> リツイート数: {{ tweet.retweet_count }} </v-col>
     </v-row>
-    <ReadButton v-if="auth.logged_in" :tweet_id="tweet.id"></ReadButton>
+    <div class="text-right">
+      <ReadButton v-if="auth.logged_in" :tweet_id="tweet.id"></ReadButton>
+    </div>
   </v-card>
 </template>
 
 <script>
-import ReadButton from './readButton.vue'
+import ReadButton from './reads/button.vue'
 
 export default {
   props: {
