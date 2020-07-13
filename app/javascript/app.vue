@@ -1,22 +1,26 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
-  </div>
+  <v-app>
+    <AppBar></AppBar>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+    <ToolBar></ToolBar>
+  </v-app>
 </template>
 
 <script>
+import AppBar from './packs/components/appBar.vue'
+import ToolBar from './packs/components/toolBar.vue'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  }
+  components: {
+    AppBar,
+    ToolBar,
+  },
+  mounted() {
+    this.$store.dispatch('resetAuth')
+  },
 }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
+<style scoped></style>
