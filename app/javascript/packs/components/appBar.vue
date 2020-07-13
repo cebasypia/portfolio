@@ -11,7 +11,9 @@
       <router-link v-else v-bind:to="{ name: 'UsersNewPage' }">
         <v-icon>mdi-account-plus</v-icon>
       </router-link>
-      <v-toolbar-title @click="scrollTop">Let</v-toolbar-title>
+      <v-btn color="amber darken-2" fab small>
+        <v-icon @click="scrollTop">mdi-rodent</v-icon>
+      </v-btn>
       <v-icon v-if="auth.logged_in" @click="logout">mdi-logout</v-icon>
       <router-link v-else v-bind:to="{ name: 'UsersLoginPage' }">
         <v-icon>mdi-login</v-icon>
@@ -31,7 +33,14 @@
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>My Account</v-list-item-title>
+          <v-list-item-title>マイページ</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item @click="linkTo(`/records`)">
+          <v-list-item-icon>
+            <v-icon>mdi-school</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>最近の学習</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="linkTo(`/users/edit`)">
@@ -39,6 +48,13 @@
             <v-icon>mdi-account-cog</v-icon>
           </v-list-item-icon>
           <v-list-item-title>ユーザー情報の変更</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item @click="logout">
+          <v-list-item-icon>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ログアウト</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
