@@ -1,5 +1,5 @@
 <template>
-  <v-card class="align-center mx-auto">
+  <v-card class="comment-card align-center mx-auto">
     <div class="information">
       <div class="created_at">{{ comment.created_at }}にコメント</div>
       <v-list-item v-if="display_user">
@@ -15,15 +15,11 @@
     <div v-if="display_tweet" class="tweet-card-container">
       <TweetCardMini class="tweet-card" :tweet="comment.tweet"></TweetCardMini>
     </div>
-    <v-card-actions v-if="is_mime">
-      <v-list-item class="grow">
-        <v-row align="center" justify="end">
-          <v-icon color="red" @click="destroyComment(comment.id)"
-            >mdi-delete</v-icon
-          >
-        </v-row>
-      </v-list-item>
-    </v-card-actions>
+    <div v-if="is_mime" class="text-right">
+      <v-btn class="ma-2" color="red" fab small dark>
+        <v-icon @click="destroyComment(comment.id)">mdi-delete</v-icon>
+      </v-btn>
+    </div>
   </v-card>
 </template>
 <script>
@@ -47,6 +43,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    display_delete: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   methods: {
@@ -61,6 +61,7 @@ export default {
       return this.$store.state.auth
     },
     is_mime: function () {
+      if (this.display_delete === false) return false
       if (this.$store.state.auth.logged_in) {
         return this.comment.user.id === this.auth.current_user.id
       } else {
@@ -76,6 +77,9 @@ export default {
 </script>
 
 <style scoped>
+.comment-card {
+  margin-bottom: 1rem;
+}
 .information {
   position: relative;
 }
@@ -85,13 +89,10 @@ export default {
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.6);
 }
-
-.tweet-card {
-  box-shadow: initial !important;
-  border-color: rgba(0, 172, 237, 1);
-  border-style: solid;
-}
 .tweet-card-container {
   padding: 1rem;
+}
+.btn-delete {
+  color: red;
 }
 </style>

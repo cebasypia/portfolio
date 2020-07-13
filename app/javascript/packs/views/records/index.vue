@@ -13,6 +13,7 @@
           v-for="comment in comments"
           :comment="comment"
           :key="comment.id"
+          :display_delete="false"
         ></CommentCard>
       </v-container>
     </v-tab-item>
