@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="user-card">
     <v-list-item two-line>
       <v-list-item-avatar size="73" color="grey">
         <v-img :src="user.profile_image_url"></v-img>
@@ -28,6 +28,9 @@ export default {
 </script>
 
 <style scoped>
+.user-card {
+  margin-bottom: 1rem;
+}
 a {
   text-decoration: none;
 }

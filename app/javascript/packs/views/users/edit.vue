@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid>
     <v-list-item>
       <UserImage :size="80" :user="user" :is_link="false"></UserImage>
       <a href="https://ja.gravatar.com/">by Gravator</a>
@@ -49,7 +49,7 @@
         更新
       </v-btn>
     </v-form>
-  </div>
+  </v-container>
 </template>
 
 <script>

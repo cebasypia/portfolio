@@ -1,5 +1,5 @@
 <template>
-  <v-card @click="linkTo(`/tweets/${tweet.id}`)">
+  <v-card class="tweet-card" @click="linkTo(`/tweets/${tweet.id}`)">
     <v-list-item two-line>
       <v-list-item-avatar size="48" color="grey">
         <v-img :src="tweet.user.profile_image_url"></v-img>
@@ -37,6 +37,11 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+}
+.tweet-card {
+  box-shadow: initial !important;
+  border-color: rgba(0, 172, 237, 1);
+  border-style: solid;
 }
 .error-text {
   color: red !important;

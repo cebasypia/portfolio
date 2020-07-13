@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 import store from './store.js'
 
 import NotFound from './views/notFound.vue'
-import UsersIndexPage from './views/users/index.vue'
 import UsersLoginPage from './views/users/login.vue'
 import UsersShowPage from './views/users/show.vue'
 import UsersNewPage from './views/users/new.vue'
@@ -43,7 +42,6 @@ const router = new VueRouter({
       name: 'TweetsUserPage',
       component: TweetsUserPage,
     },
-    { path: '/users.index', component: UsersIndexPage },
     {
       path: '/login',
       name: 'UsersLoginPage',
