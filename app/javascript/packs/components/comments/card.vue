@@ -11,7 +11,7 @@
         </v-list-item-content>
       </v-list-item>
     </div>
-    <v-card-text>{{ comment.content }}</v-card-text>
+    <v-card-text class="text">{{ comment.content }}</v-card-text>
     <div v-if="display_tweet" class="tweet-card-container">
       <TweetCardMini class="tweet-card" :tweet="comment.tweet"></TweetCardMini>
     </div>
@@ -79,6 +79,11 @@ export default {
 <style scoped>
 .comment-card {
   margin-bottom: 1rem;
+}
+.text {
+  color: rgba(0, 0, 0, 0.87);
+  user-select: text;
+  white-space: pre-wrap;
 }
 .information {
   position: relative;
