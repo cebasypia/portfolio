@@ -1,10 +1,10 @@
 <template>
-  <div v-if="is_read">
-    <v-icon @click="destroyRead">mdi-heart</v-icon>よんだ！
-  </div>
-  <div v-else>
-    <v-icon @click="createRead">mdi-heart-outline</v-icon>よんだ！
-  </div>
+  <v-btn v-if="is_read" class="ma-2 on" fab small>
+    <v-icon @click="destroyRead">mdi-folder-heart</v-icon>
+  </v-btn>
+  <v-btn v-else class="ma-2 off" fab small>
+    <v-icon @click="createRead">mdi-folder-heart-outline</v-icon>
+  </v-btn>
 </template>
 <script>
 import axios from 'axios'
@@ -41,7 +41,10 @@ export default {
 </script>
 
 <style scoped>
-button {
-  color: red !important;
+.on {
+  color: red;
+}
+.off {
+  color: gray;
 }
 </style>
