@@ -5,7 +5,7 @@
       v-model="comment"
       :counter="140"
       :rules="commentRules"
-      label="comment"
+      label="Memo"
       auto-grow
       rows="1"
       row-height="2rem"
