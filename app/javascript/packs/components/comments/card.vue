@@ -1,7 +1,7 @@
 <template>
   <v-card class="comment-card align-center mx-auto">
     <div class="information">
-      <div class="created_at">{{ comment.created_at }}にコメント</div>
+      <div class="created_at">{{ comment.created_at }}</div>
       <v-list-item v-if="display_user">
         <UserImage :size="size" :user="comment.user"></UserImage>
         <v-list-item-content>
