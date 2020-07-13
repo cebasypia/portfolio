@@ -19,7 +19,6 @@ class Api::V1::TweetsController < ApiController
       since_id: since_id,
       max_id: max_id.to_i - 1
     )
-    # 取得したツイートをモデルに渡す
     tweets.take(10).each do |tweet|
       @tweet = tweet.attrs
       @tweet[:id] = @tweet[:id_str]
@@ -60,6 +59,30 @@ class Api::V1::TweetsController < ApiController
       uri: user.uri.to_s,
     )
     render json: @user
+  end
+
+  def user_recent_tweets
+    @tweets = []
+    # since_id = nil
+    client = set_client
+    # リツイートを除く、検索ワードにひっかかった最新10件のツイートを取得する
+    tweets = client.user_timeline(
+      params[:id].to_i,
+      tweet_mode: "extended",
+      count: 20,
+      # since_id: since_id,
+    )
+    tweets.take(20).each do |tweet|
+      @tweet = tweet.attrs
+      @tweet[:id] = @tweet[:id_str]
+      @tweet[:created_at] = time_ago_in_words tweet.created_at
+      @tweet[:uri] = tweet.uri.to_s
+      @tweet[:user][:id] = tweet.attrs[:user][:id_str]
+      @tweet[:user][:profile_image_url] = tweet.user.profile_image_url_https(size = :bigger).to_s
+      @tweet[:user][:user_uri] = tweet.user.uri.to_s
+      @tweets.push(@tweet)
+    end
+    render json: @tweets.sort_by { |tweet| tweet[:id] }.reverse
   end
 
   private

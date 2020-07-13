@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get '/auth',  to: 'sessions#get_auth'
       get '/tweets', controller: 'tweets', action: 'search'
       get '/tweets/user/:id', controller: 'tweets', action: 'user'
+      get '/tweets/user/:id/recent', controller: 'tweets', action: 'user_recent_tweets'
       get '/tweets/:id', controller: 'tweets', action: 'show'
     end
   end
