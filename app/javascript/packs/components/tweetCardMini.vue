@@ -48,6 +48,7 @@ a {
 }
 .text {
   color: rgba(0, 0, 0, 0.87);
+  user-select: text;
 }
 .user-name {
   color: rgba(0, 0, 0, 0.87);

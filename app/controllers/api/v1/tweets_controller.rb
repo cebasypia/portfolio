@@ -30,7 +30,7 @@ class Api::V1::TweetsController < ApiController
       @tweet[:user][:user_uri] = tweet.user.uri.to_s
       @tweets.push(@tweet)
     end
-    render json: @tweets
+    render json: @tweets.sort_by { |tweet| tweet[:id] }.reverse
   end
 
   def show

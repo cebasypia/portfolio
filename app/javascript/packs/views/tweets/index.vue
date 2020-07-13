@@ -41,7 +41,10 @@ export default {
       if (!this.$store.state.searches.word) return
       axios
         .get(`/api/v1/tweets`, { params: this.$store.state.searches })
-        .then((response) => (this.tweets = response.data))
+        .then((response) => {
+          this.tweets = response.data
+          this.display_alert = this.tweets.length === 0
+        })
     },
     getNextTweets() {
       const searches = Object.assign(
@@ -65,7 +68,7 @@ export default {
     )
     axios.get(`/api/v1/tweets`, { params: searches }).then((response) => {
       this.tweets = response.data
-      if (this.tweets.length === 0) this.display_alert = true
+      this.display_alert = this.tweets.length === 0
     })
   },
   components: {
