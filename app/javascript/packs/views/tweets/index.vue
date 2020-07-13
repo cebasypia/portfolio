@@ -39,12 +39,15 @@ export default {
   methods: {
     search() {
       if (!this.$store.state.searches.word) return
-      axios
-        .get(`/api/v1/tweets`, { params: this.$store.state.searches })
-        .then((response) => {
-          this.tweets = response.data
-          this.display_alert = this.tweets.length === 0
-        })
+      const searches = Object.assign(
+        {},
+        JSON.parse(JSON.stringify(this.$store.state.searches)),
+        JSON.parse(JSON.stringify(this.$attrs))
+      )
+      axios.get(`/api/v1/tweets`, { params: searches }).then((response) => {
+        this.tweets = response.data
+        this.display_alert = this.tweets.length === 0
+      })
     },
     getNextTweets() {
       const searches = Object.assign(

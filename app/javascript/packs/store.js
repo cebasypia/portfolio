@@ -14,7 +14,8 @@ export default new Vuex.Store({
     searches: {
       word: 'japan',
       lang: 'en',
-      result_type: 'mixed',
+      result_type: 'popular',
+      user: '',
     },
   },
   getters: {},
