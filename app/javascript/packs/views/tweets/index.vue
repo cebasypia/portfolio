@@ -2,7 +2,7 @@
   <v-container fluid>
     <SearchForm @search="search"></SearchForm>
     <v-alert
-      v-if="tweets.length === 0"
+      v-if="display_alert"
       border="top"
       colored-border
       type="info"
@@ -33,6 +33,7 @@ export default {
   data: function () {
     return {
       tweets: [],
+      display_alert: false,
     }
   },
   methods: {
@@ -52,6 +53,7 @@ export default {
         for (let tweet of response.data) {
           this.tweets.push(tweet)
         }
+        if (this.tweets.length === 0) this.display_alert = true
       })
     },
   },
@@ -61,9 +63,10 @@ export default {
       JSON.parse(JSON.stringify(this.$store.state.searches)),
       JSON.parse(JSON.stringify(this.$attrs))
     )
-    axios
-      .get(`/api/v1/tweets`, { params: searches })
-      .then((response) => (this.tweets = response.data))
+    axios.get(`/api/v1/tweets`, { params: searches }).then((response) => {
+      this.tweets = response.data
+      if (this.tweets.length === 0) this.display_alert = true
+    })
   },
   components: {
     TweetCard,
