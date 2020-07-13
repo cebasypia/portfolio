@@ -78,6 +78,8 @@ a {
 }
 .text {
   color: rgba(0, 0, 0, 0.87);
+  user-select: text;
+  white-space: pre-wrap;
 }
 ::v-deep .v-image {
   margin: 0.5rem;
