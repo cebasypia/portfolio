@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card>
+    <v-card class="user-card">
       <v-list-item two-line>
         <UserImage :user="user" :is_link="false"></UserImage>
         <v-list-item-content>
@@ -12,8 +12,14 @@
       <v-card-text class="text">{{ user.profile }}</v-card-text>
     </v-card>
     <v-tabs fixed-tabs light color="amber darken-2">
-      <v-tab> よんだ！: {{ Object.keys(readTweets).length }} </v-tab>
-      <v-tab> かいた！: {{ Object.keys(comments).length }} </v-tab>
+      <v-tab>
+        <v-icon>mdi-folder-heart</v-icon>
+        <span>よんだ！: {{ Object.keys(readTweets).length }}</span>
+      </v-tab>
+      <v-tab>
+        <v-icon>mdi-lead-pencil</v-icon>
+        かいた！: {{ Object.keys(comments).length }}
+      </v-tab>
       <v-tab-item>
         <tweetCard
           v-for="tweet in readTweets"
@@ -83,4 +89,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.user-card {
+  margin-bottom: 1rem;
+}
+</style>
