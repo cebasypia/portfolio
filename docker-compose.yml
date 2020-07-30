@@ -16,12 +16,12 @@ services:
     # command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails assets:precompile && bundle exec rails s -e production"
     volumes:
       - .:/let
-      - bundle:/usr/local/bundle 
+      - bundle:/usr/local/bundle
       - public-data:/let/public
       - tmp-data:/let/tmp
       - yarn-cache:/usr/local/share/.cache/yarn/v6
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - db
     stdin_open: true
