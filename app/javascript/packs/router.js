@@ -13,6 +13,9 @@ import TweetsSearchPage from './views/tweets/search.vue'
 import TweetsShowPage from './views/tweets/show.vue'
 import TweetsUserPage from './views/tweets/user.vue'
 import RecordsIndexPage from './views/records/index.vue'
+import GamesIndexPage from './views/games/index.vue'
+import GamesPlayPage from './views/games/play.vue'
+import GamesRecordPage from './views/games/record.vue'
 
 Vue.use(VueRouter)
 
@@ -65,6 +68,22 @@ const router = new VueRouter({
       path: '/records',
       name: 'RecordsIndexPage',
       component: RecordsIndexPage,
+    },
+    {
+      path: '/games',
+      name: 'GamesIndexPage',
+      component: GamesIndexPage,
+    },
+    {
+      path: '/games/play',
+      name: 'GamesPlayPage',
+      component: GamesPlayPage,
+    },
+    {
+      path: '/games/record',
+      name: 'GamesRecordPage',
+      component: GamesRecordPage,
+      props: true,
     },
     {
       path: '*',

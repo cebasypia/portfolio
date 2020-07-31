@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get '/tweets/user/:id', controller: 'tweets', action: 'user'
       get '/tweets/user/:id/recent', controller: 'tweets', action: 'user_recent_tweets'
       get '/tweets/:id', controller: 'tweets', action: 'show'
+      get '/games', controller: 'games', action: 'get_score'
     end
   end
 end
