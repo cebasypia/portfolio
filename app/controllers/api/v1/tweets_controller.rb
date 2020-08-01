@@ -7,6 +7,7 @@ class Api::V1::TweetsController < ApiController
     @tweets = []
     since_id = nil
     client = set_client
+    count = (params[:count] || 15).to_i
     max_id = params[:max_id] || 0
     # リツイートを除く、検索ワードにひっかかった最新10件のツイートを取得する
     tweets = client.search(
@@ -19,7 +20,7 @@ class Api::V1::TweetsController < ApiController
       since_id: since_id,
       max_id: max_id.to_i - 1
     )
-    tweets.take(10).each do |tweet|
+    tweets.take(count).each do |tweet|
       @tweet = tweet.attrs
       @tweet[:id] = @tweet[:id_str]
       @tweet[:created_at] = time_ago_in_words tweet.created_at

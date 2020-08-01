@@ -50,6 +50,13 @@
           <v-list-item-title>ユーザー情報の変更</v-list-item-title>
         </v-list-item>
 
+        <v-list-item @click="linkTo(`/games`)">
+          <v-list-item-icon>
+            <v-icon>mdi-gamepad-square</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ネガポジ判定ゲーム</v-list-item-title>
+        </v-list-item>
+
         <v-list-item @click="logout">
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
